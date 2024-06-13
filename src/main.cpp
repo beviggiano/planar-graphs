@@ -4,22 +4,20 @@
 #include <cmath>
 #include <utility>
 
-using namespace std;
-
 // Variáveis globais para armazenar a face atual e todas as faces encontradas
-vector<int> face;
-vector<vector<int>> faces;
+std::vector<int> face;
+std::vector<std::vector<int>> faces;
 
 // Função para calcular a inclinação relativa entre dois pontos (x1, y1) e (x2, y2)
 double relativeInclination(double x1, double x2, double y1, double y2){
-    return atan2(y1 - y2, x1 - x2);
+    return std::atan2(y1 - y2, x1 - x2);
 }
 
 // Função para ordenar as conexões de um nó com base na inclinação relativa em relação ao nó de referência
-vector<int> sort_connections(int i, vector<int>& connections, vector<pair<double, double>>& pos){
+std::vector<int> sort_connections(int i, std::vector<int>& connections, std::vector<std::pair<double, double>>& pos){
     double x_ref = pos[i].first;
     double y_ref = pos[i].second;
-    sort(connections.begin(), connections.end(), [&](int a, int b) {
+    std::sort(connections.begin(), connections.end(), [&](int a, int b) {
         double incl_a = relativeInclination(pos[a].first, x_ref, pos[a].second, y_ref);
         double incl_b = relativeInclination(pos[b].first, x_ref, pos[b].second, y_ref);
         return incl_a < incl_b;
@@ -30,18 +28,18 @@ vector<int> sort_connections(int i, vector<int>& connections, vector<pair<double
 
 // Função para imprimir todas as faces encontradas
 void printFaces(){
-    cout << faces.size() << endl;
+    std::cout << faces.size() << std::endl;
     for(const auto& f : faces){
-        cout << f.size() << " ";
+        std::cout << f.size() << " ";
         for(int node : f){
-            cout << node + 1 << " "; // Converte de 0-based para 1-based index
+            std::cout << node + 1 << " "; // Converte de 0-based para 1-based index
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 }
 
 // Função de DFS para encontrar e armazenar faces no grafo
-void dfs(int start, int current, int direction, vector<vector<int>>& graph, vector<vector<bool>>& visited, vector<pair<double, double>>& positions){
+void dfs(int start, int current, int direction, std::vector<std::vector<int>>& graph, std::vector<std::vector<bool>>& visited, std::vector<std::pair<double, double>>& positions){
     visited[current][direction] = true; // Marca a meia aresta como visitada
 
     int next_node = graph[current][direction]; // Próximo nó a ser visitado
@@ -68,24 +66,24 @@ void dfs(int start, int current, int direction, vector<vector<int>>& graph, vect
 
 int main() {
     int n, m;
-    cin >> n >> m; // Lê o número de nós e arestas
+    std::cin >> n >> m; // Lê o número de nós e arestas
 
-    vector<vector<int>> graph(n);
-    vector<vector<bool>> visited(n);
-    vector<pair<double, double>> positions(n); 
+    std::vector<std::vector<int>> graph(n);
+    std::vector<std::vector<bool>> visited(n);
+    std::vector<std::pair<double, double>> positions(n); 
 
     // Lê as posições dos nós e suas conexões
     for(int i = 0; i < n; i++){
         double x, y;
-        cin >> x >> y;
+        std::cin >> x >> y;
 
         positions[i] = {x, y};
 
         int k;
-        cin >> k;
+        std::cin >> k;
         while (k--) {
             int a;
-            cin >> a;
+            std::cin >> a;
             a--;
             graph[i].push_back(a);
             visited[i].push_back(false);
