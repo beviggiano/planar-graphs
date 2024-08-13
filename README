@@ -1,0 +1,1 @@
+The specific objective of this work is to implement a program in C++ that, given a planar graph and the coordinates of its vertices, is capable of identifying and listing all the faces of the graph. The program must be efficient both in terms of time and space, respecting the execution limits specified in the work statement.
